@@ -1,0 +1,22 @@
+body div>div {
+  display: inline;
+  margin: 5px;
+}
+
+.leds {
+  display: inline-grid;
+  grid-template-columns: repeat(7, auto);
+}
+
+.leds .row {
+  display: contents;
+}
+
+a {
+  appearance: button;
+  text-decoration: none;
+  background: green;
+  padding: 25px;
+  min-width: 2em;
+  min-height: 2em;
+}

@@ -1,0 +1,7 @@
+{
+  "port": "/dev/ttyACM0",
+  "board": "arduino:samd:nano_33_iot",
+  "sketch": "./src/ofc_webserver.ino",
+  "output": ".tmp/build",
+  "prebuild": "build/prebuild.sh"
+}

@@ -1,0 +1,29 @@
+.gridgrid {
+  display: inline-grid;
+  grid-template-columns: repeat(3, auto);
+  border: 1px solid blue;
+}
+
+.gridgrid>div {
+  display: inline-grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 1px;
+  background-color: #3938da;
+  border: 1px solid blue;
+}
+
+.gridgrid>div>div {
+  text-align: center;
+  line-height: 200%;
+  min-width: 2em;
+  min-height: 2em;
+  background-color: snow;
+}
+
+.gridgrid>div:hover {
+  filter: brightness(0.95);
+}
+
+.gridgrid>div>div:hover {
+  filter: brightness(0.85);
+}
