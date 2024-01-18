@@ -32,7 +32,8 @@ void HtmlSendPage200(Stream &stream, PAGE_DATA *ptrPageData)
   stream.println("Content-Encoding: gzip");
   stream.print("Content-Length: ");
   stream.println(ptrPageData->length);
-  stream.println("Content-type: text/html");
+  stream.print("Content-type: ");
+  stream.println(ptrPageData->mime);
   stream.println();
   stream.write(ptrPageData->data, ptrPageData->length);
   stream.println();
