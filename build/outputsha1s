@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd web/pages
+for f in $(find -type f); do
+  size="$(cat ${f} | wc -c)"
+  sha1="$(cat ${f} | sha1sum | cut -c-40)"
+  sizegzip="$(gzip -9nc ${f} | wc -c)"
+  sha1gzip="$(gzip -9nc ${f} | sha1sum | cut -c-40)"
+  printf "%-20s  %6s  %s  %6s  %s\n" "${f##./}" "${size}" "${sha1}" "${sizegzip}" "${sha1gzip}"
+done

@@ -5,7 +5,7 @@ typedef struct PAGE_DATA
   char *path;
   const char *mime;
   const unsigned char *data;
-  unsigned int length;
+  size_t length;
 };
 
 const char *mime_css = "text/css";

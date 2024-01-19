@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 gziptocdata() {
   cd web/pages
@@ -6,9 +6,12 @@ gziptocdata() {
     pagepath="${f##.}"
     pagesuffix="${pagepath##*.}"
     pathsha1="page_$(echo ${pagepath} | sha1sum | cut -c-40)"
-    echo "const $(gzip -9nc ${f} | xxd -i -name ${pathsha1} | grep -ve "_len")"
+    # echo "const $(gzip -9nc ${f} | xxd -i -c16 -name ${pathsha1} | grep -ve "_len")"
+    echo "const unsigned char ${pathsha1}[] = {"
+    gzip -9nc ${f} | xxd -i -c16
+    echo "};"
     echo
-    pagestruct="${pagestruct}{\"${pagepath}\", "mime_${pagesuffix}", ${pathsha1}, sizeof(${pathsha1})},\n"
+    pagestruct="${pagestruct}  {\"${pagepath}\", "mime_${pagesuffix}", ${pathsha1}, sizeof(${pathsha1})},\n"
   done
 
 }
@@ -19,7 +22,7 @@ geninclude() {
   gziptocdata
   echo
   echo 'const PAGE_DATA pagedata[] = {'
-  echo -ne "${pagestruct}"
+  echo -n "${pagestruct}"
   echo '};'
 }
 

@@ -28,6 +28,12 @@ void HtmlSendPage404(Stream &stream)
 
 void HtmlSendPage200(Stream &stream, PAGE_DATA *ptrPageData)
 {
+  Serial.print("path: ");
+  Serial.println(ptrPageData->path);
+  Serial.print("mime: ");
+  Serial.println(ptrPageData->mime);
+  Serial.print("length: ");
+  Serial.println(ptrPageData->length);
   stream.println("HTTP/1.1 200 OK");
   stream.println("Content-Encoding: gzip");
   stream.print("Content-Length: ");
