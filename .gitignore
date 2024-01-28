@@ -1,3 +1,4 @@
 .tmp/
+.vscode/c_cpp_properties.json
 src/arduino_secrets.h
 src/html.pages.data.h
