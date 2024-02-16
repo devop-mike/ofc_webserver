@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cd $(dirname $(dirname $0))
 cd web/pages
 for f in $(find -type f); do
   size="$(cat ${f} | wc -c)"

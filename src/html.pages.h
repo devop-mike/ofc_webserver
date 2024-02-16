@@ -26,14 +26,32 @@ void HtmlSendPage404(Stream &stream)
   stream.println();
 }
 
+void chunkedwrite(Stream &stream, const uint8_t *buffer, size_t size)
+{ // chunk large files and yield so stream.write doesn't lock up mcu.
+  const size_t chunksize = 4000;
+  const uint8_t *data = buffer;
+  size_t length = size;
+  while (length > chunksize)
+  {
+    stream.write(data, chunksize);
+    length -= chunksize;
+    data += chunksize;
+    yield();
+    Serial.print("left: ");
+    Serial.println(length);
+  }
+  stream.write(data, length);
+}
+
 void HtmlSendPage200(Stream &stream, PAGE_DATA *ptrPageData)
 {
-  Serial.print("path: ");
-  Serial.println(ptrPageData->path);
-  Serial.print("mime: ");
-  Serial.println(ptrPageData->mime);
-  Serial.print("length: ");
-  Serial.println(ptrPageData->length);
+  // Serial.print("path: ");
+  // Serial.println(ptrPageData->path);
+  // Serial.print("mime: ");
+  // Serial.println(ptrPageData->mime);
+  // Serial.print("length: ");
+  // Serial.println(ptrPageData->length);
+
   stream.println("HTTP/1.1 200 OK");
   stream.println("Content-Encoding: gzip");
   stream.print("Content-Length: ");
@@ -41,7 +59,7 @@ void HtmlSendPage200(Stream &stream, PAGE_DATA *ptrPageData)
   stream.print("Content-type: ");
   stream.println(ptrPageData->mime);
   stream.println();
-  stream.write(ptrPageData->data, ptrPageData->length);
+  chunkedwrite(stream, ptrPageData->data, ptrPageData->length);
   stream.println();
 }
 
